@@ -29,4 +29,16 @@ public class Reservation {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
     private StatutReservation statut;
+
+    // Côté propriétaire (clé étrangère client_id_client)
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Client client;
+
+    // Côté propriétaire (clé étrangère vehicule_id_vehicule), aucune cascade
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Vehicule vehicule;
+
+    // Côté inverse du OneToOne : ALL (le contrat dépend de sa réservation)
+    @OneToOne(mappedBy = "reservation", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Contrat contrat;
 }
